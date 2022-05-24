@@ -4,12 +4,18 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; //Swi
 import  Home  from './container/Home';
 import  Signin  from './container/Signin';
 import  Signup  from './container/Signup';
+import  PrivateRoute from './components/HOC/PrivateRoute';
+
+
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <PrivateRoute path="/" element={<Home />} />
+          {/* <Route exact path='/' element={<PrivateRoute/>}>
+            <Route exact path='/' element={<Home/>}/>
+          </Route> */}
           <Route exact path="/signin" element={<Signin />} />
           <Route exact path="/signup" element={<Signup />} />
         </Routes>

@@ -1,10 +1,11 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import Input from '../../components/UI/Input/index';
 import { login } from '../../actions/index';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { isUserLoggedIn } from '../../actions/auth.actions'
 /**
 * @author
 * @function Signin
@@ -16,6 +17,13 @@ const Signin = (props) => {
   const [password, setPassword]=useState('');
   const [error,setError]=useState('');
   const dispatch=useDispatch();
+  const auth=useSelector(state=>state.auth);
+
+  useEffect(()=>{
+    if (!auth.authenticate){
+      dispatch(isUserLoggedIn());
+    }
+  },[]);
 
   const userLogin=(e)=>{
     e.preventDefault();
@@ -25,6 +33,9 @@ const Signin = (props) => {
     dispatch(login(user));
   }
 
+  if (auth.authenticate){
+    return < Navigate to ={'/'}/>
+  }
 
   return (
     <Layout>

@@ -5,7 +5,7 @@ import Input from '../../components/UI/Input/index';
 import { login } from '../../actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { isUserLoggedIn } from '../../actions/auth.actions'
+
 /**
 * @author
 * @function Signin
@@ -19,11 +19,6 @@ const Signin = (props) => {
   const dispatch=useDispatch();
   const auth=useSelector(state=>state.auth);
 
-  useEffect(()=>{
-    if (!auth.authenticate){
-      dispatch(isUserLoggedIn());
-    }
-  },[]);
 
   const userLogin=(e)=>{
     e.preventDefault();

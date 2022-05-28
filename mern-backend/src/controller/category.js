@@ -13,7 +13,7 @@ function createCategories(categories, parentId = null){
     for(let cate of category){
         categoryList.push({
             _id: cate._id,
-            name: cate._name,
+            name: cate.name,
             slug: cate.slug,
             children: createCategories(categories, cate._id)
 
@@ -51,8 +51,9 @@ exports.getCategories=(req,res)=>{
     .exec((error,categories)=>{
         if (error) return res.status(400).json({error});
         if (categories) {
+            // res.status(200).json({categories});
             const categoryList=createCategories(categories);
-            return res.status(201).json({ categoryList });
+            return res.status(200).json({ categoryList });
         }
     })
 }

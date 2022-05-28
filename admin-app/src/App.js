@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isUserLoggedIn } from './actions/auth.actions';
 import { Products } from './container/Products';
 import { Orders } from './container/Orders';
+import { Category } from './container/Category';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="/products" element={<PrivateRoute><Products/></PrivateRoute>} />
+        <Route path="/category" element={<PrivateRoute><Category/></PrivateRoute>} />
         <Route path="/orders" element={<PrivateRoute><Orders/></PrivateRoute>} />
         <Route path="/signin" element={<Signin />} />
         <Route exact path="/signin" element={<Signin />} />

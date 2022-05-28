@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../Header';
 import { Row, Col, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-
+import './styles.css'
 /**
 * @author
 * @function Layout

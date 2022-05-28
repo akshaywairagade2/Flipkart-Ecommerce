@@ -82,7 +82,6 @@ export const Category = (props) => {
                     <Col md={12}>
                         <ul>
                             {renderCategories(category.categories)}
-                            {JSON.stringify(createCategoryList(category.categories))};
                         </ul>
                     </Col>
                 </Row>

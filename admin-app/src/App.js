@@ -11,6 +11,7 @@ import { Products } from './container/Products';
 import { Orders } from './container/Orders';
 import { Category } from './container/Category';
 import { getAllCategory, getInitialData } from './actions'
+import { NewPage } from './container/NewPage';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path="/page" element={<PrivateRoute><NewPage/></PrivateRoute>} />
         <Route path="/products" element={<PrivateRoute><Products/></PrivateRoute>} />
         <Route path="/category" element={<PrivateRoute><Category/></PrivateRoute>} />
         <Route path="/orders" element={<PrivateRoute><Orders/></PrivateRoute>} />

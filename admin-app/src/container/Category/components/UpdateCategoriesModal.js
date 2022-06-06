@@ -11,7 +11,8 @@ const UpdateCategoriesModal = (props) => {
             expandedArray,
             checkedArray,
             handleCategoryInput,
-            categoryList
+            categoryList,
+            onSubmit
          }=props;
     
     console.log({expandedArray,checkedArray});
@@ -19,6 +20,7 @@ const UpdateCategoriesModal = (props) => {
         <Modal
             show={show}
             handleClose={handleClose}
+            onSubmit={onSubmit}
             modalTitle={modalTitle}
             size={size}
         >

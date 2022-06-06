@@ -30,14 +30,19 @@ export const Category = (props) => {
     const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
     const dispatch = useDispatch();
 
-
+    useEffect(()=>{
+        if (!category.loading){
+            setShow(false);
+        }
+    },[category.loading]);
 
     const handleClose = () => {
         const form = new FormData();
-        // if (categoryName===""){
-        //     alert("Name is required");
-        //     return;
-        // }
+        if (categoryName===""){
+            alert("Name is required");
+            setShow(false);
+            return;
+        }
         form.append('name', categoryName);
         form.append('parentId', parentCategoryId);
         form.append('categoryImage', categoryImage);
@@ -126,8 +131,6 @@ export const Category = (props) => {
             form.append("type", item.type);
         });
         dispatch(updateCategories(form));
-
-        setUpdateCategoryModal(false)
     }
 
     const deleteCategory = () => {
@@ -226,7 +229,8 @@ export const Category = (props) => {
 
             <AddCategoryModal
                 show={show}
-                handleClose={handleClose}
+                handleClose={()=>setShow(false)}
+                onSubmit={handleClose}
                 modalTitle={"Add New Category"}
                 categoryName={categoryName}
                 setCategoryName={setCategoryName}
@@ -238,7 +242,8 @@ export const Category = (props) => {
 
             <UpdateCategoriesModal
                 show={updateCategoryModal}
-                handleClose={updateCategoriesForm}
+                handleClose={()=>setUpdateCategoryModal(false)}
+                onSubmit={updateCategoriesForm}
                 modalTitle={"Update Categories"}
                 size="lg"
                 expandedArray={expandedArray}

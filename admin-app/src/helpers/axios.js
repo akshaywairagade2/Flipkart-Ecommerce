@@ -25,7 +25,7 @@ axiosInstance.interceptors.response.use((res)=>{
 },(error)=>{
     console.log(error.response);
     const { status } =error.response;
-    if (status===500){
+    if ( status && status===500){
         localStorage.clear();
         store.dispatch({ type:authConstants.LOGOUT_SUCCESS });
         // alert("Time Out! Please Login Again");

@@ -11,6 +11,7 @@ const categoryRoutes=require('./routes/category');
 const productRoutes=require('./routes/product');
 const cartRoutes=require('./routes/cart');
 const initialDataRoutes=require('./routes/admin/initialData');
+const pageRoutes=require('./routes/admin/page');
 
 env.config();
 
@@ -18,7 +19,7 @@ env.config();
 //mongodb+srv://root:<password>@cluster0.34z42.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 mongoose.connect(
-    "mongodb+srv://akshay:SPqE_dAx4yP6G6e@cluster0.jwqjv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.jwqjv.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
     // `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.34z42.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
     {
         useNewUrlParser:true,
@@ -39,6 +40,7 @@ app.use('/api',categoryRoutes);
 app.use('/api',productRoutes);
 app.use('/api',cartRoutes);
 app.use('/api',initialDataRoutes);
+app.use('/api',pageRoutes);
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server is running on ${process.env.PORT}`);

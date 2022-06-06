@@ -4,7 +4,9 @@ import Modal from '../../components/UI/Modal/index';
 import Input from '../../components/UI/Input/index';
 import { Row, Col, Container } from 'react-bootstrap';
 import linearCategories from '../../helpers/linearCategories';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPage } from '../../actions/index'
+
 /**
 * @author
 * @function NewPage
@@ -17,28 +19,73 @@ export const NewPage = (props) => {
     const category = useSelector(state => state.category);
     const [categories, setCategories] = useState([]);
     const [categoryId, setCategoryId] = useState('');
-    const [desc,setDesc]=useState('');
-    const [banners,setBanners]=useState([]);
-    const [products,setProducts]=useState([]);
+    const [desc, setDesc] = useState('');
+    const [type, setType] = useState('');
+    const [banners, setBanners] = useState([]);
+    const [products, setProducts] = useState([]);
+    const dispatch = useDispatch();
+    const page = useSelector(state => state.page);
 
     useEffect(() => {
         setCategories(linearCategories(category.categories));
     }, [category]);
 
-    const handleBannerImages=(e)=>{
+    useEffect(() => {
+        console.log(page);
+        if (page.loading) {
+            setCreateModal(false);
+            setCreateModal(false);
+            setTitle('');
+            setCategoryId('');
+            setDesc('');
+            setProducts([]);
+            setBanners([]);
+        }
+    }, [page]);
+
+    const onCategoryChange = (e) => {
+        const category = categories.find(category => category._id == e.target.value);
+        setCategoryId(e.target.value);
+        setType(category.type);
+    }
+    const handleBannerImages = (e) => {
+        setBanners([...banners, e.target.files[0]]);
         console.log(e);
-    } 
-    
-    const handleProductImages=(e)=>{
+    }
+
+    const handleProductImages = (e) => {
+        setProducts([...products, e.target.files[0]]);
         console.log(e);
-    } 
+    }
+
+    const submitPageForm = (e) => {
+        // e.preventDefault();
+        if (title === "") {
+            alert("Title is required");
+            return;
+        }
+        const form = new FormData();
+        form.append('title', title);
+        form.append('description', desc);
+        form.append('category', categoryId);
+        form.append('type', type);
+        banners.forEach((banner, index) => {
+            form.append('banners', banner);
+        });
+        products.forEach((product, index) => {
+            form.append('products', product);
+        });
+        dispatch(createPage(form));
+        // console.log({ title, desc, categoryId, type, banners, products });
+    }
 
     const renderCreatePageModal = () => {
         return (
             <Modal
                 show={createModal}
                 modalTitle={'Create New Page'}
-                handleClose={() => setCreateModal(false)}
+                handleClose={()=>setCreateModal(false)}
+                onSubmit={submitPageForm}
             >
                 <Container>
                     <Row>
@@ -46,7 +93,7 @@ export const NewPage = (props) => {
                             <select
                                 className='form-control form-control-sm'
                                 value={categoryId}
-                                onChange={(e) => setCategoryId(e.target.value)}
+                                onChange={onCategoryChange}
                             >
                                 <option value="">Select Category</option>
                                 {
@@ -56,6 +103,13 @@ export const NewPage = (props) => {
                                 }
 
                             </select>
+                            {/* <Input
+                                type="select"
+                                value={categoryId}
+                                onChange={onCategoryChange}
+                                options={categories}
+                                placeholder={"Select Category"}
+                            /> */}
                         </Col>
                     </Row>
                     <Row>
@@ -79,25 +133,40 @@ export const NewPage = (props) => {
                             />
                         </Col>
                     </Row>
-
+                    {
+                        banners.length > 0 ?
+                            banners.map((banner, index) => {
+                                <Row key={index}>
+                                    <Col>{banner.name}</Col>
+                                </Row>
+                            }) : null
+                    }
                     <Row>
                         <Col>
-                                <input className='form-control form-control-sm'
-                                    type="file"
-                                    name="banners"
-                                    onChange={handleBannerImages}
-                                />
+                            <Input className='form-control'
+                                type="file"
+                                name="banners"
+                                onChange={handleBannerImages}
+                            />
                         </Col>
                     </Row>
+                    {
+                        products.length > 0 ?
 
+                            products.map((product, index) => {
+                                <Row key={index}>
+                                    <Col>{product.name}</Col>
+                                </Row>
+                            }) : null
+                    }
                     <Row>
                         <Col>
-                                <input
-                                    className='form-control form-control-sm'
-                                    type="file"
-                                    name="products"
-                                    onChange={handleProductImages}
-                                />
+                            <Input
+                                className='form-control'
+                                type="file"
+                                name="products"
+                                onChange={handleProductImages}
+                            />
                         </Col>
                     </Row>
 
@@ -108,8 +177,17 @@ export const NewPage = (props) => {
 
     return (
         <Layout sidebar>
-            {renderCreatePageModal()}
-            <button onClick={() => setCreateModal(true)}>Create Page</button>
+            {
+                page.loading ?
+                    <>
+                    <p>Creating Page ... Please wait</p>
+                    </>
+                    :
+                    <>
+                        {renderCreatePageModal()}
+                        <button onClick={() => setCreateModal(true)}>Create Page</button>
+                    </>
+            }
         </Layout>
     )
 

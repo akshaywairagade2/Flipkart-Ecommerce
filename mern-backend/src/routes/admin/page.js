@@ -1,0 +1,11 @@
+const express = require('express');
+const { upload, requiresSignIn, adminMiddleware } = require('../../common-middleware');
+const { createPage } = require('../../controller/admin/page');
+const router = express.Router();;
+
+router.post('/page/create',requiresSignIn,adminMiddleware,upload.fields([
+    {name:'banners'},
+    {name:'products'}
+]),createPage);
+
+module.exports = router;

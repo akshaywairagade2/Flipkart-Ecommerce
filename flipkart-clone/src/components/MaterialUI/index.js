@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './style.css';
 
 /**
-* @author Rizwan Khan
+* @author 
 * @function 
 **/
 
@@ -44,7 +44,7 @@ export const MaterialInput = (props) => {
                         setFocus(true)
                     }}
                     onBlur={(e) => {
-                        if(e.target.value === ""){
+                        if (e.target.value === "") {
                             setFocus(false)
                         }
                     }} />
@@ -57,22 +57,23 @@ export const MaterialInput = (props) => {
 }
 
 export const MaterialButton = (props) => {
-    const onClick=()=>{
+    const onClick = () => {
         props.onClick && props.onClick();
     }
     return (
-        <div style={{ 
+        <div style={{
             width: '90%',
             ...props.style
-            }}>
+        }}>
             <button
                 className="materialButton"
                 style={{
-                    backgroundColor:props.bgColor,
-                    color:props.textColor
+                    backgroundColor: props.bgColor,
+                    color: props.textColor
                 }}
                 onClick={onClick}
             >
+                {props.icon && props.icon}
                 {props.title && props.title}
             </button>
         </div>
@@ -82,22 +83,29 @@ export const MaterialButton = (props) => {
 
 export const DropdownMenu = (props) => {
     return (
-      <div className="headerDropdownContainer">
-        {props.menu}
-        <div className="dropdown">
-          <div className="upArrow"></div>
-          {props.firstMenu}
-          <ul className="headerDropdownMenu">
-            {
-              props.menus && props.menus.map((item, index) =>
-                <li key={index}><a href={item.href}>{item.label}</a></li>
-              )
-            }
-          </ul>
+        <div className="headerDropdownContainer">
+            {props.menu}
+            <div className="dropdown">
+                <div className="upArrow"></div>
+                {props.firstMenu}
+                <ul className="headerDropdownMenu">
+                    {
+                        props.menus && props.menus.map((item, index) =>
+                            <li key={index}>
+                                <a onClick={(e) => {
+                                    e.preventDefault();
+                                    item.onClick && item.onClick()
+                                }}
+                                    href={item.href}>{item.label}
+                                </a>
+                            </li>
+                        )
+                    }
+                </ul>
+            </div>
         </div>
-      </div>
     );
-  }
+}
 
 // export {
 //     Modal,

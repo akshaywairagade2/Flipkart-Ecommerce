@@ -5,6 +5,7 @@ import { ProductListPage } from './containers/ProductListPage';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isUserLoggedIn } from './actions';
+import { ProductDetailsPage } from './containers/ProductDetailsPage';
 function App() {
   const dispatch=useDispatch();
   const auth=useSelector(state=>state.auth);
@@ -20,6 +21,7 @@ function App() {
         <Routes>
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/:slug" element={<ProductListPage />} />
+        <Route exact path="/:productSlug/:productId/p" element={<ProductDetailsPage />} />
         </Routes>
       </Router>
     </div>

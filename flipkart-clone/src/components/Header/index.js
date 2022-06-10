@@ -10,7 +10,7 @@ import {
   DropdownMenu
 } from '../MaterialUI';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../actions';
+import { login, signout } from '../../actions';
 /**
 * @author
 * @function Header
@@ -27,10 +27,14 @@ export const Header = (props) => {
     dispatch(login({ email, password }));
   }
 
-  useEffect(() => {
-    // if (auth.authenticate){
+  const logout=()=>{
+    dispatch(signout());
+  }
 
-    // }
+  useEffect(() => {
+    if (auth.authenticate){
+      setLoginModal(false);
+    }
   }, [auth.authenticate]);
 
   const renderLoggedInMenu = () => {
@@ -52,7 +56,7 @@ export const Header = (props) => {
           { label: 'Rewards', href: '', icon: null },
           { label: 'Notification', href: '', icon: null },
           { label: 'Gift Cards', href: '', icon: null },
-          { label: 'Logout', href: '', icon: null },
+          { label: 'Logout', href: '', icon: null, onClick:logout },
         ]}
       />
     )

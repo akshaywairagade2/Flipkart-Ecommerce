@@ -4,6 +4,7 @@ import { getProductsBySlug } from '../../../actions';
 import { useParams } from 'react-router-dom';
 import { generatePictureurl } from '../../../urlConfig';
 import { Link } from 'react-router-dom';
+import { Card } from '../../../components/UI/Card';
 /**
 * @author
 * @function ProductStore
@@ -32,11 +33,15 @@ export const ProductStore = (props) => {
             {
                 Object.keys(product.productsByPrice).map((key, index) => {
                     return (
-                        <div className='card'>
-                            <div className='cardHeader'>
-                                <div> {slug} Mobile {priceRange[key]}</div>
-                                <button>View</button>
-                            </div>
+                        <Card
+                            headerLeft={`${slug} Mobile ${priceRange[key]}`}
+                            headerRight={<button>View</button>}
+                            style={{
+                                // innerWidth:'calc(100%-40px)',
+                                margin:'20px'
+                            }}
+                        >
+
                             <div style={{ display: 'flex' }}>
                                 {
                                     product.productsByPrice[key].map(product =>
@@ -60,7 +65,7 @@ export const ProductStore = (props) => {
                                 }
 
                             </div>
-                        </div>
+                        </Card>
                     );
                 })
             }

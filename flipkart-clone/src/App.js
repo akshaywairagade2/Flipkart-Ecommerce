@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isUserLoggedIn } from './actions';
 import { ProductDetailsPage } from './containers/ProductDetailsPage';
+import { CartPage } from './containers/CartPage';
+import { updateCart } from './actions/cart.action';
 function App() {
   const dispatch=useDispatch();
   const auth=useSelector(state=>state.auth);
@@ -15,6 +17,10 @@ function App() {
     }
   },[auth.authenticate]);
 
+  useEffect(()=>{
+    dispatch(updateCart());
+  },[]);
+
   return (
     <div className="App">
       <Router>
@@ -22,6 +28,7 @@ function App() {
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/:slug" element={<ProductListPage />} />
         <Route exact path="/:productSlug/:productId/p" element={<ProductDetailsPage />} />
+        <Route exact path="/cart" element={<CartPage />} />
         </Routes>
       </Router>
     </div>

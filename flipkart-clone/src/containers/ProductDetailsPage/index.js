@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { getProductDetailsById } from '../../actions';
 import { Layout } from '../../components/Layout'
 import {
@@ -13,6 +13,7 @@ import { AiFillThunderbolt } from 'react-icons/ai';
 import { MaterialButton } from '../../components/MaterialUI';
 import './style.css';
 import { generatePictureurl } from '../../urlConfig';
+import { addToCart } from '../../actions/cart.action';
 
 /**
 * @author
@@ -20,7 +21,7 @@ import { generatePictureurl } from '../../urlConfig';
 **/
 
 export const ProductDetailsPage = (props) => {
-
+    const history=useNavigate();
     const dispatch = useDispatch();
     const { productId } = useParams();
     const product = useSelector(state => state.product);
@@ -67,6 +68,12 @@ export const ProductDetailsPage = (props) => {
                                     marginRight: '5px'
                                 }}
                                 icon={<IoMdCart />}
+                                onClick={()=>{
+                                    const {_id,name,price}=product.productDetails;
+                                    const img=product.productDetails.productPictures[0].img;
+                                    dispatch(addToCart({_id,name,price,img}));
+                                    history('/cart');
+                                }}
                             />
                             <MaterialButton
                                 title="BUY NOW"

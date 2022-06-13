@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../actions/cart.action';
+import { addToCart,getCartItems } from '../../actions/cart.action';
 import { Layout } from '../../components/Layout'
 import { Card } from '../../components/UI/Card'
 import { CartItem } from './CartItem';
@@ -12,11 +12,19 @@ import './style.css';
 
 export const CartPage = (props) => {
     const dispatch=useDispatch();
+    const auth=useSelector(state=>state.auth);
     const cart = useSelector(state => state.cart);
     const [cartItems,setCartItems]=useState(cart.cartItems);
+
     useEffect(()=>{
         setCartItems(cart.cartItems);
-    },[cart.cartItems])
+    },[cart.cartItems]);
+
+    useEffect(()=>{
+        if (auth.authenticate){
+            dispatch(getCartItems());
+        }
+    },[auth.authenticate])
 
     const onQuantityIncrement=(_id,qty)=>{
         const { name,price,img}=cartItems[_id];

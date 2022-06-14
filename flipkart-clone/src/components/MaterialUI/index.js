@@ -62,7 +62,7 @@ export const MaterialButton = (props) => {
     }
     return (
         <div style={{
-            width: '90%',
+            width: '100%',
             ...props.style
         }}>
             <button
@@ -104,6 +104,15 @@ export const DropdownMenu = (props) => {
                 </ul>
             </div>
         </div>
+    );
+}
+
+export const Anchor=(props)=>{
+    return (
+        <button {...props} className="anchorButton"
+        >
+            {props.name}
+        </button>
     );
 }
 

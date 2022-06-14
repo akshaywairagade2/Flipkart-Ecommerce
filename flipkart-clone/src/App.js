@@ -8,6 +8,7 @@ import { isUserLoggedIn } from './actions';
 import { ProductDetailsPage } from './containers/ProductDetailsPage';
 import { CartPage } from './containers/CartPage';
 import { updateCart } from './actions/cart.action';
+import { CheckoutPage } from './containers/CheckoutPage';
 function App() {
   const dispatch=useDispatch();
   const auth=useSelector(state=>state.auth);
@@ -26,6 +27,7 @@ function App() {
       <Router>
         <Routes>
         <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/checkout" element={<CheckoutPage />} />
         <Route exact path="/:slug" element={<ProductListPage />} />
         <Route exact path="/:productSlug/:productId/p" element={<ProductDetailsPage />} />
         <Route exact path="/cart" element={<CartPage />} />

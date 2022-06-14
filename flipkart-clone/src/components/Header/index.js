@@ -11,13 +11,14 @@ import {
 } from '../MaterialUI';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, signout } from '../../actions';
+import { useNavigate } from 'react-router-dom';
 /**
 * @author
 * @function Header
 **/
 
 export const Header = (props) => {
-
+  const history=useNavigate();
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -62,6 +63,10 @@ export const Header = (props) => {
     )
   }
 
+  const goToCart =()=>{
+    history('/cart');
+  }
+
   const renderNonLoggedInMenu = () => {
     return (
       <DropdownMenu
@@ -102,7 +107,7 @@ export const Header = (props) => {
             </div>
             <div className="rightspace">
 
-
+              <div className="loginInputContainer">
               <MaterialInput
                 type="text"
                 label="Enter Email/Enter Mobile Number"
@@ -126,7 +131,7 @@ export const Header = (props) => {
                 }}
                 onClick={userLogin}
               />
-              <p>OR</p>
+              <p style={{textAlign:'center'}}>OR</p>
               <MaterialButton
                 title="Request OTP"
                 bgColor="#ffffff"
@@ -135,6 +140,7 @@ export const Header = (props) => {
                   margin: '20px 0'
                 }}
               />
+              </div>
 
 
 
@@ -191,7 +197,7 @@ export const Header = (props) => {
             ]}
           />
           <div>
-            <a className="cart">
+            <a onClick={goToCart} className="cart">
               <IoIosCart />
               <span style={{ margin: '0 10px' }}>Cart</span>
             </a>

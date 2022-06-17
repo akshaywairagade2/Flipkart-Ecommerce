@@ -90,8 +90,8 @@ export const CheckoutPage = (props) => {
             "addressId":selectedAddress._id,
             totalAmount,
             items,
-
             paymentStatus:"pending",
+            paymentType:"cod",
         };
         setConfirmOrder(true);
         console.log(payload);

@@ -28,6 +28,10 @@ export const Header = (props) => {
     dispatch(login({ email, password }));
   }
 
+  const ordersPage=()=>{
+    history('/account/orders');
+  }
+
   const logout=()=>{
     dispatch(signout());
   }
@@ -50,7 +54,7 @@ export const Header = (props) => {
           { label: 'My Profile', href: '', icon: null },
           { label: 'Super Coin Zone', href: '', icon: null },
           { label: 'Flipkart Plus Zone', href: '', icon: null },
-          { label: 'Orders', href: '', icon: null },
+          { label: 'Orders', href: '', icon: null,onClick:ordersPage },
           { label: 'Wishlist', href: '', icon: null },
           { label: 'My Chats', href: '', icon: null },
           { label: 'Coupans', href: '', icon: null },
@@ -78,7 +82,11 @@ export const Header = (props) => {
         menus={[
           { label: 'My Profile', href: '', icon: null },
           { label: 'Flipkart Plus Zone', href: '', icon: null },
-          { label: 'Orders', href: '', icon: null },
+          { label: 'Orders', href: '', icon: null, 
+            onClick: ()=>{
+              !auth.authenticate && setLoginModal(true);
+            }
+          },
           { label: 'Wishlist', href: '', icon: null },
           { label: 'Rewards', href: '', icon: null },
           { label: 'Gift Cards', href: '', icon: null },
